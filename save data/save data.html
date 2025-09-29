@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Save and Copy Input</title>
+</head>
+<body>
+  <h2>Enter Your Input</h2>
+  <input type="text" id="userInput" placeholder="Type something..." />
+  <button onclick="saveInput()">Save</button>
+
+  <hr>
+
+  <h2>Copy Saved Input to Clipboard</h2>
+  <button onclick="copySavedInput()">Copy to Clipboard</button>
+
+  <script>
+    function saveInput() {
+      const input = document.getElementById("userInput").value.trim();
+      if (!input) {
+        alert("Please enter something.");
+        return;
+      }
+      localStorage.setItem("savedInput", input);
+      alert("Input saved to browser.");
+    }
+
+    async function copySavedInput() {
+      const saved = localStorage.getItem("savedInput");
+      if (!saved) {
+        alert("No saved input found.");
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(saved);
+        alert("Saved input copied to clipboard!");
+      } catch (err) {
+        alert("Failed to copy: " + err);
+      }
+    }
+  </script>
+</body>
+</html>
